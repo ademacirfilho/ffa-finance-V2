@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FFA .finance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-brand-dark text-brand-text-primary font-sans">
+    <div class="flex flex-col min-h-screen">
+      <header class="bg-brand-medium border-b border-brand-light sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center p-4">
+          <div class="flex items-center space-x-10">
+            <div class="flex-shrink-0">
+              <h1 class="text-xl font-bold text-white">FFA <span class="text-brand-accent">.finance</span></h1>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-6">
+              <a href="#" class="text-brand-accent rounded-md text-sm font-medium">Dashboard</a>
+              <a href="#" class="text-brand-text-secondary hover:text-brand-accent transition-colors duration-200 text-sm font-medium">Transações</a>
+              <a href="#" class="text-brand-text-secondary hover:text-brand-accent transition-colors duration-200 text-sm font-medium">Contatos</a>
+              <a href="#" class="text-brand-text-secondary hover:text-brand-accent transition-colors duration-200 text-sm font-medium">Categorias</a>
+              <a href="#" class="text-brand-text-secondary hover:text-brand-accent transition-colors duration-200 text-sm font-medium">Despesas</a>
+            </nav>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <div class="hidden md:flex items-center space-x-4">
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3"><i class="bi bi-search"></i></span>
+                <input type="text" class="bg-brand-dark text-white placeholder-brand-text-secondary rounded-md py-2 pl-10 pr-4 w-40 lg:w-64 focus:outline-none focus:ring-2 focus:ring-brand-accent" placeholder="Pesquisar..." />
+              </div>
+              <button class="rounded-full hover:bg-brand-light transition-colors duration-200"><i class="bi bi-person-circle text-2xl"></i></button>
+            </div>
+
+            <div class="md:hidden">
+              <button id="menu-btn" class="text-white focus:outline-none">
+                <i class="bi bi-list text-2xl"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden">
+          <button class="rounded-full hover:bg-brand-light transition-colors duration-200 ml-4 m-2"><i class="bi bi-person-circle text-2xl"> {usuario}</i></button>
+          <nav class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="#" class="text-brand-accent rounded-md text-lg font-medium block ml-2">Dashboard</a>
+            <a href="#" class="text-brand-text-secondary hover:text-brand-accent transition-colors duration-200 text-lg font-medium block ml-2">Transações</a>
+            <a href="#" class="text-brand-text-secondary hover:text-brand-accent transition-colors duration-200 text-lg font-medium block ml-2">Contatos</a>
+            <a href="#" class="text-brand-text-secondary hover:text-brand-accent transition-colors duration-200 text-lg font-medium block ml-2">Categorias</a>
+            <a href="#" class="text-brand-text-secondary hover:text-brand-accent transition-colors duration-200 text-lg font-medium block ml-2">Despesas</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="flex-grow container mx-auto p-4 md:p-6">
+        <h2 class="text-2xl font-semibold text-brand-text-primary mb-6">Olá, {usuario}.</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-brand-medium p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between">
+              <h3 class="text-brand-text-secondary">Entrada Total</h3>
+              <i class="bi bi-arrow-up-right text-green-500"></i>
+            </div>
+            <div class="flex items-baseline justify-between mt-4">
+              <p class="text-3xl font-bold text-green-500">R$ 0,00</p>
+              <span class="bg-green-500 bg-opacity-20 text-green-400 text-xs font-semibold px-2.5 py-0.5 rounded-full">0.00%</span>
+            </div>
+          </div>
+
+          <div class="bg-brand-medium p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between">
+              <h3 class="text-brand-text-secondary">Saída Total</h3>
+              <i class="bi bi-arrow-down-right text-red-500"></i>
+            </div>
+            <div class="flex items-baseline justify-between mt-4">
+              <p class="text-3xl font-bold text-red-500">R$ 0,00</p>
+              <span class="bg-red-500 bg-opacity-20 text-red-400 text-xs font-semibold px-2.5 py-0.5 rounded-full">0.00%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-brand-medium p-4 md:p-6 rounded-lg shadow-lg">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-white">Últimas transações</h3>
+            <i class="bi bi-arrow-down-up"></i>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[640px] text-left">
+              <thead class="border-b border-brand-light">
+                <tr>
+                  <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary">Descrição</th>
+                  <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary">Pago a</th>
+                  <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary">Categoria</th>
+                  <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary">Valor</th>
+                  <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary">Tipo pagamento</th>
+                  <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary text-center">Pago?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-brand-light">
+                  <td class="py-4 px-4 text-sm text-brand-text-secondary">academia</td>
+                  <td class="py-4 px-4 text-sm text-brand-text-secondary">mensalidade...</td>
+                  <td class="py-4 px-4 text-sm text-brand-text-secondary">Arena</td>
+                  <td class="py-4 px-4 text-sm text-brand-text-secondary">Academia</td>
+                  <td class="py-4 px-4 text-sm text-brand-text-secondary">À vista</td>
+                  <td class="py-4 px-4 text-sm text-brand-text-secondary flex justify-center">
+                    <span class="h-6 w-6 flex items-center justify-center rounded-full">
+                      <i class="bi bi-check-circle text-green-500"></i>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="{% static 'script/script.js' %}"></script>
+  </body>
+</html>
