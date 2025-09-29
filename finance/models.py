@@ -29,7 +29,7 @@ class Categoria(models.Model):
     tipo = models.CharField(max_length=12, choices=TIPO_CATEGORIA)
 
     def __str__(self):
-        return self.nome
+        return "{} - ({})".format(self.nome, self.tipo)
 
 class Receita(models.Model):
     TIPO_RECEITA = [
