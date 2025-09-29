@@ -7,16 +7,6 @@ from django.urls import reverse_lazy
 class IndexView(TemplateView):
     template_name = "finance/index.html"
 
-class ReceitasView(TemplateView):
-    template_name = "finance/receitas.html"
-
-'''
-class CreateReceitaView(CreateView):
-    model = Receita
-    fields = ['descricao', 'valor', 'data', 'recebido', 'tipo', 'categoriaNome', 'contatoNome', 'contato']
-    success_url = "/receitas/"
-'''
-
 class DespesasView(TemplateView):
     template_name = "finance/despesas.html"
     
@@ -24,6 +14,12 @@ class UsuarioView(TemplateView):
     template_name = "finance/usuario.html"
 
 ###### CREATE ######
+
+class ReceitaCreate(CreateView):
+    model = Receita
+    fields = ['descricao', 'valor', 'data', 'recebido', 'tipo', 'categoriaNome', 'contatoNome']
+    template_name = "form/form.html"
+    success_url = reverse_lazy("receitas")
 
 class CategoriaCreate(CreateView):
     model = Categoria
@@ -39,6 +35,12 @@ class ContatosCreate(CreateView):
 
 ###### UPDATE ######
 
+class ReceitaUpdate(UpdateView):
+    model = Receita
+    fields = ['descricao', 'valor', 'data', 'recebido', 'tipo', 'categoriaNome', 'contatoNome']
+    template_name = "form/form_editar.html"
+    success_url = reverse_lazy("receitas")
+
 class CategoriaUpdate(UpdateView):
     model = Categoria
     fields = ['nome', 'tipo']
@@ -53,6 +55,11 @@ class ContatosUpdate(UpdateView):
 
 ###### DELETE ######
 
+class ReceitaDelete(DeleteView):
+    model = Receita
+    template_name = "form/form_excluir.html"
+    success_url = reverse_lazy("receitas")
+
 class CategoriaDelete(DeleteView):
     model = Categoria
     template_name = "form/form_excluir.html"
@@ -64,6 +71,10 @@ class ContatosDelete(DeleteView):
     success_url = reverse_lazy("contatos")
 
 ##### LIST #####
+
+class ReceitaList(ListView):
+    model = Receita
+    template_name = "finance/receitas.html"
 
 class CategoriaList(ListView):
     model = Categoria

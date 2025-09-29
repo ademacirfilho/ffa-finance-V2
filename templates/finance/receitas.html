@@ -13,7 +13,7 @@
         <input type="text" class="bg-brand-medium text-white placeholder-brand-text-secondary rounded-md py-2 pl-10 pr-4 w-full focus:outline-none focus:ring-2 focus:ring-brand-accent" placeholder="Pesquisar..." />
       </div>
 
-      <button class="bg-green-400 bg-opacity-20 px-2 rounded border border-green-400 text-green-400 hover:bg-opacity-30 transition-colors whitespace-nowrap"><i class="bi bi-plus-lg"></i> Adicionar receita</button>
+      <a href="{% url "cadastrar_receita" %}"><button class="bg-green-400 bg-opacity-20 px-2 rounded border border-green-400 text-green-400 hover:bg-opacity-30 transition-colors whitespace-nowrap"><i class="bi bi-plus-lg"></i> Adicionar receita</button></a>
     </div>
   </div>
 
@@ -45,6 +45,7 @@
         </thead>
 
         <tbody>
+          {% for receita in object_list %}
           <tr class="border-b border-brand-light">
             <td class="py-4 px-4 text-sm text-brand-text-secondary">academia</td>
             <td class="py-4 px-4 text-sm text-brand-text-secondary">mensalidade...</td>
@@ -57,12 +58,17 @@
 
             <td class="py-4 px-4 text-sm text-brand-text-secondary">
               <div class="flex items-center justify-center gap-2">
-                <button type="button" aria-label="Editar" class="h-8 w-8 flex items-center justify-center rounded-md border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:bg-opacity-10 transition-colors"><i class="bi bi-pencil"></i></button>
+                <a href="{% url "editar_receita" receita.pk %}"><button type="button" aria-label="Editar" class="h-8 w-8 flex items-center justify-center rounded-md border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:bg-opacity-10 transition-colors"><i class="bi bi-pencil"></i></button></a>
 
-                <button type="button" aria-label="Excluir" class="h-8 w-8 flex items-center justify-center rounded-md border border-red-500 text-red-500 hover:bg-red-500 hover:bg-opacity-10 transition-colors"><i class="bi bi-trash"></i></button>
+                <a href="{% url "excluir_receita" receita.pk %}"><button type="button" aria-label="Excluir" class="h-8 w-8 flex items-center justify-center rounded-md border border-red-500 text-red-500 hover:bg-red-500 hover:bg-opacity-10 transition-colors"><i class="bi bi-trash"></i></button></a>
               </div>
             </td>
           </tr>
+          {% empty %}
+            <tr>
+              <td colspan="3" class="py-4 px-4 text-sm text-center text-brand-text-secondary">Nenhuma receita cadastrada.</td>
+            </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
