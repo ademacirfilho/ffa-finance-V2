@@ -19,9 +19,6 @@ class CreateReceitaView(CreateView):
 
 class DespesasView(TemplateView):
     template_name = "finance/despesas.html"
-
-class ContatosView(TemplateView):
-    template_name = "finance/contatos.html"
     
 class UsuarioView(TemplateView):
     template_name = "finance/usuario.html"
@@ -34,6 +31,12 @@ class CategoriaCreate(CreateView):
     template_name = "form/form.html"
     success_url = reverse_lazy("categorias")
 
+class ContatosCreate(CreateView):
+    model = Contato
+    fields = ['nome', 'email', 'telefone', 'cpf_cnpj', 'tipo']
+    template_name = "form/form.html"
+    success_url = reverse_lazy("contatos")
+
 ###### UPDATE ######
 
 class CategoriaUpdate(UpdateView):
@@ -42,6 +45,12 @@ class CategoriaUpdate(UpdateView):
     template_name = "form/form_editar.html"
     success_url = reverse_lazy("categorias")
 
+class ContatosUpdate(UpdateView):
+    model = Contato
+    fields = ['nome', 'email', 'telefone', 'cpf_cnpj', 'tipo']
+    template_name = "form/form_editar.html"
+    success_url = reverse_lazy("contatos")
+
 ###### DELETE ######
 
 class CategoriaDelete(DeleteView):
@@ -49,8 +58,17 @@ class CategoriaDelete(DeleteView):
     template_name = "form/form_excluir.html"
     success_url = reverse_lazy("categorias")
 
+class ContatosDelete(DeleteView):
+    model = Contato
+    template_name = "form/form_excluir.html"
+    success_url = reverse_lazy("contatos")
+
 ##### LIST #####
 
 class CategoriaList(ListView):
     model = Categoria
     template_name = "finance/categorias.html"
+
+class ContatosList(ListView):
+    model = Contato
+    template_name = "finance/contatos.html"
