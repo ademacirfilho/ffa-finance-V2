@@ -34,9 +34,9 @@
           {% for contato in object_list %}
           <tr class="border-b border-brand-light">
             <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ contato.nome }}</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary truncate">{{ contato.email }}</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ contato.telefone }}</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary text-right">{{ contato.cpf_cnpj }}</td>
+            <td class="py-4 px-4 text-sm text-brand-text-secondary truncate">{{ contato.email|default:'---' }}</td>
+            <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ contato.telefone|default:'---' }}</td>
+            <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ contato.cpf_cnpj|default:'---' }}</td>
             <td class="py-4 px-4 text-sm text-brand-text-secondary">
               <div class="flex items-center justify-center gap-2">
                 <a href="{% url "editar_contato" contato.pk %}"><button type="button" aria-label="Editar" class="h-8 w-8 flex items-center justify-center rounded-md border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:bg-opacity-10 transition-colors"><i class="bi bi-pencil"></i></button></a>
