@@ -35,6 +35,7 @@
             <tr class="border-b border-brand-light">
               <td class="py-4 px-4 text-sm text-brand-text-secondary truncate">{{ categoria.nome }}</td>
               <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ categoria.get_tipo_display }}</td>
+              
               <td class="py-4 px-4 text-sm text-brand-text-secondary">
                 <div class="flex items-center justify-center gap-2">
                   <a href="{% url "editar_categoria" categoria.pk %}"><button type="button" aria-label="Editar" class="h-8 w-8 flex items-center justify-center rounded-md border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:bg-opacity-10 transition-colors"><i class="bi bi-pencil"></i></button></a>
@@ -45,7 +46,9 @@
             </tr>
           {% empty %}
             <tr>
-              <td colspan="3" class="py-4 px-4 text-sm text-center text-brand-text-secondary">Nenhuma categoria cadastrada.</td>
+              <td colspan="7" class="py-12 text-center text-lg text-brand-text-secondary">
+                Nenhuma categoria cadastrada.
+              </td>
             </tr>
           {% endfor %}
         </tbody>
