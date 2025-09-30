@@ -13,7 +13,7 @@
         <input type="text" class="bg-brand-medium text-white placeholder-brand-text-secondary rounded-md py-2 pl-10 pr-4 w-full focus:outline-none focus:ring-2 focus:ring-brand-accent" placeholder="Pesquisar..." />
       </div>
 
-      <a href="{% url "cadastrar_receita" %}"><button class="bg-green-400 bg-opacity-20 px-2 rounded border border-green-400 text-green-400 hover:bg-opacity-30 transition-colors whitespace-nowrap"><i class="bi bi-plus-lg"></i> Adicionar receita</button></a>
+      <a href="{% url 'cadastrar_receita' %}"><button class="bg-green-400 bg-opacity-20 p-2 rounded border border-green-400 text-green-400 hover:bg-opacity-30 transition-colors whitespace-nowrap"><i class="bi bi-plus-lg"></i> Adicionar receita</button></a>
     </div>
   </div>
 
@@ -47,13 +47,13 @@
         <tbody>
           {% for receita in object_list %}
           <tr class="border-b border-brand-light">
-            <td class="py-4 px-4 text-sm text-brand-text-secondary">academia</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary">mensalidade...</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary">Arena</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary">R$ 0,00</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary">À vista</td>
+            <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ receita.descricao }}</td>
+            <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ receita.contatoNome }}</td>
+            <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ receita.categoriaNome }}</td>
+            <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ receita.valor }}</td>
+            <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ receita.tipo }}</td>
             <td class="py-4 px-4 text-sm text-brand-text-secondary flex justify-center">
-              <span class="h-6 w-6 flex items-center justify-center rounded-full"><i class="bi bi-check-circle text-green-500"></i></span>
+              <span class="h-6 w-6 flex items-center justify-center rounded-full">{{ receita.recebido }}</span>
             </td>
 
             <td class="py-4 px-4 text-sm text-brand-text-secondary">
