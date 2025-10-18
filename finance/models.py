@@ -12,7 +12,7 @@ class Contato(models.Model):
     nome = models.CharField(max_length=100)
     email = models.EmailField(blank=True)
     telefone = models.CharField(max_length=15, blank=True)
-    cpf_cnpj = models.CharField(max_length=18, blank=True)
+    cpf_cnpj = models.CharField(max_length=18, blank=True, verbose_name="CPF/CNPJ")
     tipo = models.CharField(max_length=12, choices=TIPO_CONTATO)
 
     def __str__(self):
@@ -38,13 +38,13 @@ class Receita(models.Model):
         ('PIX', 'Pix'),
         ('BOLETO', 'Boleto'),
     ]
-    descricao = models.CharField(max_length=100)
+    descricao = models.CharField(max_length=100, verbose_name="Descrição")
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     data = models.DateField()
     recebido = models.BooleanField(default=False)
     tipo = models.CharField(max_length=10, choices=TIPO_RECEITA)
-    categoriaNome = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    contatoNome = models.ForeignKey(Contato, on_delete=models.CASCADE)
+    categoriaNome = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name="Categoria")
+    contatoNome = models.ForeignKey(Contato, on_delete=models.CASCADE, verbose_name="Contato")
 
     def __str__(self):
         return self.descricao
@@ -56,13 +56,13 @@ class Despesa(models.Model):
         ('PIX', 'Pix'),
         ('BOLETO', 'Boleto'),
     ]
-    descricao = models.CharField(max_length=100)
+    descricao = models.CharField(max_length=100, verbose_name="Descrição")
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     data = models.DateField()
     pago = models.BooleanField(default=False)
     tipo = models.CharField(max_length=10, choices=TIPO_DESPESA)
-    categoriaNome = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    contatoNome = models.ForeignKey(Contato, on_delete=models.CASCADE)
+    categoriaNome = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name="Categoria")
+    contatoNome = models.ForeignKey(Contato, on_delete=models.CASCADE, verbose_name="Contato")
 
     def __str__(self):
         return self.descricao

@@ -1,0 +1,30 @@
+{% extends "usuarios/base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="flex-1 flex flex-col items-center justify-center px-4 min-h-0">
+  <div class="mb-8 text-center">
+    <span class="text-3xl md:text-4xl font-semibold text-white">FFA <span class="text-brand-accent font-light">.finance</span></span>
+  </div>
+
+  <div class="w-full max-w-md">
+    <div class="login-card rounded-2xl p-10 md:p-12 bg-[#ffffff08] border border-[#ffffff08] shadow-lg backdrop-blur-sm">
+      <h2 class="text-3xl md:text-4xl font-semibold text-white text-center mb-8">Log In</h2>
+
+      <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <p class="text-sm text-brand-text-secondary text-center">Não tem uma conta? <a href="#" class="text-brand-accent hover:underline">Cadastre-se</a></p>
+
+        <div class="flex justify-end">
+            <button class="my-4 bg-green-400 bg-opacity-20 p-2 rounded border border-green-400 text-green-400 hover:bg-opacity-30 transition-colors whitespace-nowrap" type="submit">Entrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
