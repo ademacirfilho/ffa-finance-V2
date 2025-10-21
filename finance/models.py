@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Contato(models.Model):
     TIPO_CONTATO = [
@@ -14,6 +15,7 @@ class Contato(models.Model):
     telefone = models.CharField(max_length=15, blank=True)
     cpf_cnpj = models.CharField(max_length=18, blank=True, verbose_name="CPF/CNPJ")
     tipo = models.CharField(max_length=12, choices=TIPO_CONTATO)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome
@@ -27,13 +29,14 @@ class Categoria(models.Model):
     ]
     nome = models.CharField(max_length=50)
     tipo = models.CharField(max_length=12, choices=TIPO_CATEGORIA)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return "{} - ({})".format(self.nome, self.tipo)
 
 class Receita(models.Model):
     TIPO_RECEITA = [
-        ('A VISTA', 'À Vista'),
+        ('AVISTA', 'À Vista'),
         ('CARTÃO', 'Cartão'),
         ('PIX', 'Pix'),
         ('BOLETO', 'Boleto'),
@@ -45,13 +48,14 @@ class Receita(models.Model):
     tipo = models.CharField(max_length=10, choices=TIPO_RECEITA)
     categoriaNome = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name="Categoria")
     contatoNome = models.ForeignKey(Contato, on_delete=models.CASCADE, verbose_name="Contato")
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.descricao
     
 class Despesa(models.Model):
     TIPO_DESPESA = [
-        ('A VISTA', 'À Vista'),
+        ('AVISTA', 'À Vista'),
         ('CARTÃO', 'Cartão'),
         ('PIX', 'Pix'),
         ('BOLETO', 'Boleto'),
@@ -63,6 +67,7 @@ class Despesa(models.Model):
     tipo = models.CharField(max_length=10, choices=TIPO_DESPESA)
     categoriaNome = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name="Categoria")
     contatoNome = models.ForeignKey(Contato, on_delete=models.CASCADE, verbose_name="Contato")
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.descricao
