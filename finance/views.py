@@ -11,6 +11,12 @@ from django.shortcuts import get_object_or_404
 
 class IndexView(TemplateView):
     template_name = "finance/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['usuario'] = self.request.user
+        return context
     
 class UsuarioView(TemplateView):
     template_name = "finance/usuario.html"
