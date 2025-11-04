@@ -44,7 +44,7 @@
               </div>
 
               {% if user.is_authenticated %}
-                <a href="{% url 'usuario' %}" class="flex items-center space-x-2 text-white rounded-md hover:text-brand-accent transition-colors duration-200">
+                <a href="{% url 'atualizar-dados' %}" class="flex items-center space-x-2 text-white rounded-md hover:text-brand-accent transition-colors duration-200">
                   <span class="font-medium">
                     {% if user.first_name %}
                       {{ user.first_name }}
