@@ -1,6 +1,7 @@
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.models import User
 from .forms import UsuarioForm
+from finance.forms import PerfilForm
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 
@@ -20,8 +21,7 @@ class UsuarioCreate(CreateView):
     
 class PerfilUpdate(UpdateView):
     template_name = "usuarios/atualizar_dados.html"
-    model = Perfil
-    fields = ["nome", "sobrenome", "cpf", "telefone", "foto_perfil"]
+    form_class = PerfilForm
     success_url = reverse_lazy("usuario")
 
     def get_object(self, queryset=None):

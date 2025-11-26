@@ -1,5 +1,6 @@
 from django import forms
 from .models import Contato, Categoria, Receita, Despesa
+from usuarios.models import Perfil
 
 base_classes = (
     "bg-brand-medium text-white text-sm rounded-lg "
@@ -102,4 +103,16 @@ class DespesaForm(forms.ModelForm):
             "categoriaNome": CustomSelect(),
             "contatoNome": CustomSelect(),
             "pago": CustomCheckboxInput(),
+        }
+
+class PerfilForm(forms.ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ["nome", "sobrenome", "cpf", "telefone", "foto_perfil"]
+        widgets = {
+            "nome": CustomTextInput(),
+            "sobrenome": CustomTextInput(),
+            "cpf": CustomTextInput(),
+            "telefone": CustomTextInput(),
+            "foto_perfil": forms.ClearableFileInput(attrs={"class": base_classes}), 
         }
