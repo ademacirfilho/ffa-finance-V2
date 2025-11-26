@@ -19,11 +19,14 @@ class UsuarioCreate(CreateView):
         return url
     
 class PerfilUpdate(UpdateView):
-    template_name = "form/form.html"
+    template_name = "usuarios/atualizar_dados.html"
     model = Perfil
-    fields = ["nome", "sobrenome", "cpf", "telefone"]
-    success_url = reverse_lazy("index")
+    fields = ["nome", "sobrenome", "cpf", "telefone", "foto_perfil"]
+    success_url = reverse_lazy("usuario")
 
     def get_object(self, queryset=None):
-        self.object = get_object_or_404(Perfil, usuario=self.request.user)
-        return self.object
+        return get_object_or_404(Perfil, usuario=self.request.user)
+
+    def form_valid(self, form):
+        form.instance.foto_perfil = self.request.FILES.get("foto_perfil", form.instance.foto_perfil)
+        return super().form_valid(form)

@@ -1,6 +1,9 @@
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
+
+from usuarios.models import Perfil
+
 from .models import Receita, Despesa, Contato, Categoria
 from .forms import ReceitaForm, DespesaForm, ContatoForm, CategoriaForm
 from django.urls import reverse_lazy
@@ -183,4 +186,12 @@ class ContatosList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         self.object_list = Contato.objects.filter(usuario=self.request.user)
+        return self.object_list
+
+class UsuarioList(LoginRequiredMixin, ListView):
+    model = Perfil
+    template_name = "finance/usuario.html"
+
+    def get_queryset(self):
+        self.object_list = Perfil.objects.filter(usuario=self.request.user)
         return self.object_list

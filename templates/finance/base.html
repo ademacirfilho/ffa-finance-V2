@@ -44,7 +44,11 @@
               </div>
 
               {% if user.is_authenticated %}
+              {% if user.perfil.nome %}
+                <a href="{% url 'usuario' %}" class="flex items-center space-x-2 text-white rounded-md hover:text-brand-accent transition-colors duration-200">
+              {% elif not user.perfil.nome %}
                 <a href="{% url 'atualizar-dados' %}" class="flex items-center space-x-2 text-white rounded-md hover:text-brand-accent transition-colors duration-200">
+              {% endif %}
                   <span class="font-medium">
                     {% if user.first_name %}
                       {{ user.first_name }}
@@ -53,7 +57,11 @@
                     {% endif %}
                   </span>
 
+                  {% if user.perfil.foto_perfil %}
+                    <img src="{{ user.perfil.foto_perfil.url }}" alt="Foto de Perfil" class="w-8 h-8 rounded-full object-cover">
+                  {% else %}
                   <i class="bi bi-person-circle text-2xl"></i>
+                  {% endif %}
                 </a>
               {% endif %}
             </div>
