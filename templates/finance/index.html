@@ -2,8 +2,16 @@
 {% load static %}
 
 {% block content %}
-  <h2 class="text-2xl font-semibold text-brand-text-primary mb-6">Olá, {{ user.username }}.</h2>
-
+  <h2 class="text-2xl font-semibold text-brand-text-primary mb-2">Olá, {{ user.username }}.</h2>
+  {% if user.perfil.nome %}
+  {% elif not user.perfil.nome %}
+  <h3 class="text-lg font-normal text-brand-text-primary mb-4">
+    Você ainda não concluiu seu cadastro,
+    <a href="{% url 'atualizar-dados' %}" class="underline text-brand-accent hover:text-blue-800 transition-all">clique aqui</a>
+    para finalizar.
+  </h3>
+  {% endif %}
+  
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
     <div class="bg-brand-medium p-6 rounded-lg shadow-lg">
       <div class="flex items-center justify-between">
