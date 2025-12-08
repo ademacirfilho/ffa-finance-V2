@@ -156,6 +156,22 @@ class ContatosDelete(LoginRequiredMixin, DeleteView):
 
 
 ##### LIST #####
+class IndexView(LoginRequiredMixin, TemplateView):
+    template_name = "finance/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['receitas'] = Receita.objects.filter(
+            usuario=self.request.user
+        ).order_by('-data')[:5]
+
+        context['despesas'] = Despesa.objects.filter(
+            usuario=self.request.user
+        ).order_by('-data')[:5]
+
+        return context
+
 class ReceitaList(LoginRequiredMixin, ListView):
     model = Receita
     template_name = "finance/receitas.html"

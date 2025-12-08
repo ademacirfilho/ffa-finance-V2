@@ -3,6 +3,7 @@
 
 {% block content %}
   <h2 class="text-2xl font-semibold text-brand-text-primary mb-2">Olá, {{ user.username }}.</h2>
+  
   {% if user.perfil.nome %}
   {% elif not user.perfil.nome %}
   <h3 class="text-lg font-normal text-brand-text-primary mb-4">
@@ -36,37 +37,94 @@
     </div>
   </div>
 
-  <div class="bg-brand-medium p-4 md:p-6 rounded-lg shadow-lg">
-    <div class="flex items-center justify-between mb-4">
-      <h3 class="text-lg font-semibold text-white">Últimas transações</h3>
-      <i class="bi bi-arrow-down-up"></i>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <div class="bg-brand-medium p-4 md:p-6 rounded-lg shadow-lg flex flex-col h-full">
+      <div class="flex items-center justify-between mb-4 border-b border-brand-light pb-2">
+        <h3 class="text-lg font-semibold text-white">
+            <i class="bi bi-arrow-up-circle text-green-500 mr-2"></i>Últimas Entradas
+        </h3>
+        <a href="{% url "receitas" %}" class="text-xs text-brand-text-secondary hover:text-white transition">Ver todas</a>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead>
+            <tr>
+              <th class="pb-2 text-sm font-medium text-brand-text-primary">Descrição</th>
+              <th class="pb-2 text-sm font-medium text-brand-text-primary text-right">Valor</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-brand-light">
+            {% for receita in receitas %}
+            <tr class="group hover:bg-white/5 transition">
+              <td class="py-3 pr-2">
+                <p class="text-sm text-white font-medium">{{ receita.descricao }}</p>
+                <p class="text-xs text-brand-text-secondary">
+                  {{ receita.data|date:"d/m" }} • {{ receita.categoria }}
+                </p>
+              </td>
+              <td class="py-3 pl-2 text-right whitespace-nowrap">
+                <span class="text-green-500 font-bold text-sm">+ R$ {{ receita.valor }}</span>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" class="py-6 text-center text-brand-text-secondary text-sm italic">
+                    Nenhuma entrada recente.
+                </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="overflow-x-auto">
-      <table class="w-full min-w-[640px] text-left">
-        <thead class="border-b border-brand-light">
-          <tr>
-            <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary">Descrição</th>
-            <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary">Pago a</th>
-            <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary">Categoria</th>
-            <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary">Valor</th>
-            <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary">Tipo pagamento</th>
-            <th scope="col" class="py-3 px-4 text-xl font-normal text-brand-text-primary text-center">Pago?</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b border-brand-light">
-            <td class="py-4 px-4 text-sm text-brand-text-secondary">academia</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary">mensalidade...</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary">Arena</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary">Academia</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary">À vista</td>
-            <td class="py-4 px-4 text-sm text-brand-text-secondary flex justify-center">
-              <span class="h-6 w-6 flex items-center justify-center rounded-full"><i class="bi bi-check-circle text-green-500"></i></span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="bg-brand-medium p-4 md:p-6 rounded-lg shadow-lg flex flex-col h-full">
+      <div class="flex items-center justify-between mb-4 border-b border-brand-light pb-2">
+        <h3 class="text-lg font-semibold text-white">
+            <i class="bi bi-arrow-down-circle text-red-500 mr-2"></i>Últimas Saídas
+        </h3>
+        <a href="{% url "despesas" %}" class="text-xs text-brand-text-secondary hover:text-white transition">Ver todas</a>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead>
+            <tr>
+              <th class="pb-2 text-sm font-medium text-brand-text-primary">Descrição</th>
+              <th class="pb-2 text-sm font-medium text-brand-text-primary text-right">Valor</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-brand-light">
+            {% for despesa in despesas %}
+            <tr class="group hover:bg-white/5 transition">
+              <td class="py-3 pr-2">
+                <p class="text-sm text-white font-medium">{{ despesa.descricao }}</p>
+                <p class="text-xs text-brand-text-secondary">
+                  {{ despesa.data|date:"d/m" }} • 
+                  {% if despesa.pago %}
+                    <span class="text-green-400">Pago</span>
+                  {% else %}
+                    <span class="text-yellow-500">Pendente</span>
+                  {% endif %}
+                </p>
+              </td>
+              <td class="py-3 pl-2 text-right whitespace-nowrap">
+                <span class="text-red-500 font-bold text-sm">- R$ {{ despesa.valor }}</span>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" class="py-6 text-center text-brand-text-secondary text-sm italic">
+                    Nenhuma saída recente.
+                </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
+
   </div>
 {% endblock %}
