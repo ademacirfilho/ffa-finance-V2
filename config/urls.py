@@ -20,8 +20,9 @@ from config import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("", include("finance.urls")),
-    path("", include("usuarios.urls")),
+    path("", include("landing_page.urls")),   # landing page na raiz
+    path("finance/", include("finance.urls")),  # /finance/...
+    path("/", include("usuarios.urls")),  # /usuarios/...
     path('admin/', admin.site.urls),
 ]
 
