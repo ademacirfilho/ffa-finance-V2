@@ -20,8 +20,8 @@
         <h3 class="text-brand-text-secondary">Total mensal previsto</h3>
       </div>
       <div class="flex items-baseline justify-between mt-3">
-        <p class="text-3xl font-bold">R$ 0,00</p>
-        <span class="text-xs font-semibold px-2.5 py-0.5">0 receitas ativas</span>
+        <p class="text-3xl font-bold">R$ {{ total_previsto|floatformat:2|default:"0,00" }}</p>
+        <span class="text-xs font-semibold px-2.5 py-0.5">{{ count_ativos }} receitas ativas</span>
       </div>
     </div>
   </div>
@@ -49,7 +49,11 @@
             <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ receita.valor }}</td>
             <td class="py-4 px-4 text-sm text-brand-text-secondary">{{ receita.tipo }}</td>
             <td class="py-4 px-4 text-sm text-brand-text-secondary flex justify-center">
-              <span class="h-6 w-6 flex items-center justify-center rounded-full">{{ receita.recebido }}</span>
+              {% if receita.recebido %}
+                <i class="bi bi-check-circle text-green-400 text-lg" aria-hidden="true"></i>
+              {% else %}
+                <i class="bi bi-x-circle text-red-500 text-lg" aria-hidden="true"></i>
+              {% endif %}
             </td>
             <td class="py-4 px-4 text-sm text-brand-text-secondary">
               <div class="flex items-center justify-center gap-2">

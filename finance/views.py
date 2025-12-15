@@ -10,16 +10,11 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from django.db.models import Sum
 
 
-class IndexView(LoginRequiredMixin, TemplateView):
-    template_name = "finance/index.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        context['usuario'] = self.request.user
-        return context
+# (Removed duplicate IndexView here; consolidated below with aggregates)
     
 class UsuarioView(TemplateView):
     template_name = "finance/usuario.html"
@@ -161,7 +156,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
+
         context['receitas'] = Receita.objects.filter(
             usuario=self.request.user
         ).order_by('-data')[:5]
@@ -169,6 +164,29 @@ class IndexView(LoginRequiredMixin, TemplateView):
         context['despesas'] = Despesa.objects.filter(
             usuario=self.request.user
         ).order_by('-data')[:5]
+
+        hoje = timezone.now()
+        receitas_mes = Receita.objects.filter(
+            usuario=self.request.user,
+            data__year=hoje.year,
+            data__month=hoje.month,
+            recebido=True,
+        )
+        despesas_mes = Despesa.objects.filter(
+            usuario=self.request.user,
+            data__year=hoje.year,
+            data__month=hoje.month,
+            pago=True,
+        )
+
+        total_receitas = receitas_mes.aggregate(Sum('valor'))['valor__sum'] or 0
+        total_despesas = despesas_mes.aggregate(Sum('valor'))['valor__sum'] or 0
+        saldo_mensal = total_receitas - total_despesas
+
+        context['total_receitas'] = total_receitas
+        context['total_despesas'] = total_despesas
+        context['saldo_mensal'] = saldo_mensal
+        context['usuario'] = self.request.user
 
         return context
 
@@ -180,6 +198,20 @@ class ReceitaList(LoginRequiredMixin, ListView):
         self.object_list = Receita.objects.filter(usuario=self.request.user)
         return self.object_list
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        hoje = timezone.now()
+        receitas_mes = Receita.objects.filter(
+            usuario=self.request.user,
+            data__year=hoje.year,
+            data__month=hoje.month,
+        )
+        total_previsto = receitas_mes.aggregate(Sum('valor'))['valor__sum'] or 0
+        count_ativos = receitas_mes.count()
+        context['total_previsto'] = total_previsto
+        context['count_ativos'] = count_ativos
+        return context
+
 class DespesaList(LoginRequiredMixin, ListView):
     model = Despesa
     template_name = "finance/despesas.html"
@@ -187,6 +219,21 @@ class DespesaList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         self.object_list = Despesa.objects.filter(usuario=self.request.user)
         return self.object_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        hoje = timezone.now()
+        despesas_mes = Despesa.objects.filter(
+            usuario=self.request.user,
+            data__year=hoje.year,
+            data__month=hoje.month,
+        )
+        total_previsto = despesas_mes.aggregate(Sum('valor'))['valor__sum'] or 0
+        count_ativos = despesas_mes.count()
+        context['total_previsto'] = total_previsto
+        context['count_ativos'] = count_ativos
+        
+        return context
 
 class CategoriaList(LoginRequiredMixin, ListView):
     model = Categoria
