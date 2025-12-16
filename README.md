@@ -104,8 +104,6 @@ ffa-finance-V2/
 │
 ├── manage.py            # Script principal do Django
 ├── requirements.txt     # Dependências do projeto
-├── .env.example         # Modelo de variáveis de ambiente
-├── .env                 # Variáveis de ambiente (NÃO vai para o Git)
 ├── .gitignore           # Arquivos ignorados pelo Git
 ├── README.md            # Este arquivo
 │
